@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from '../utils/firebase';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { PHOTO_URL } from '../utils/constant';
+import { BACKGROUND_IMG, PHOTO_URL } from '../utils/constant';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -75,7 +75,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://i0.wp.com/www.smartprix.com/bytes/wp-content/uploads/2022/11/netflix-india.jpeg?ssl=1"
+          src= {BACKGROUND_IMG}
           alt="background"
         />
       </div>
