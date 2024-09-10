@@ -4,8 +4,9 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
-import { LOGO } from '../utils/constant';
+import { LOGO, SUPPORTED_LANGUAGES } from '../utils/constant';
 import { toggleGptSearchView } from '../utils/gptSlice';
+import { changeLanguage } from '../utils/configSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,15 @@ const Header = () => {
   const user = useSelector((store) => store.user);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const profileRef = useRef(null);  // Create a reference for the profile area
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);  // Get the showGptSearch state from the store
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
   };
 
+   const handleLanguageChange = (event) => {
+    dispatch(changeLanguage(event.target.value)); 
+   }
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -74,16 +79,24 @@ const Header = () => {
       />
       {user && (
         <div className="relative flex items-center" ref={profileRef}>
-          <select>
-            <option value="en">English</option>
-            <option>Hindi</option>
-            <option>Spanish</option>
-          </select>
+          {showGptSearch && (<select
+            className="bg-gray-800 text-white border border-gray-700 rounded px-4 py-2 mr-2 hover:bg-gray-700 focus:outline-none focus:ring focus:ring-blue-500 transition" onChange={handleLanguageChange}
+          >
+            {SUPPORTED_LANGUAGES.map(lang => (
+              <option 
+                key={lang.identifier} 
+                value={lang.identifier} 
+                className="bg-gray-800 text-white"
+              >
+                {lang.name}
+              </option>
+            ))}
+          </select>)}
           <button 
             className="mr-4 py-2 px-4 bg-red-600 rounded text-sm hover:bg-red-700 transition"
             onClick={handleGptSearchClick}
           >
-            GPT Search
+            {showGptSearch ? 'Home' : 'GPT Search'}
           </button>
           <p className="mr-4 font-medium">{user?.displayName}</p>
           <img
