@@ -1,35 +1,44 @@
-// searchgptbar.js
 import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import lang from "../utils/languageConstant";
-import generateContentWithGemini from "../utils/geminiai"; // Import Gemini function
+import { API_OPTIONS, GEMINI_API_KEY } from '../utils/constant';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { addGptMovieResult } from '../utils/gptSlice';
 
 const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
+  const dispatch = useDispatch();
+  // search movie in TMDB
+  const searchMovieTMDB = async (movie) => {
+    const data = await fetch("https://api.themoviedb.org/3/search/movie?query="+movie+"&include_adult=true&language=en-US&page=1", API_OPTIONS);
+    const response = await data.json();
+    return response.results;
+  }
+  
+  const genAI = new GoogleGenerativeAI(GEMINI_API_KEY)
+
+  // Gemini API call
+  const gemini = async () => {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+    const prompt = "Act as a movie recommendation system and suggest some movies for the query " + searchText.current.value +
+      ". Only give me 5 movie names, comma-separated like the example given ahead. Example: The Dark Knight, Inception, Interstellar, The Matrix, The Shawshank Redemption";
+    
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    const moviesArray = text.split(",").map((movie) => movie.trim());
+    return moviesArray;
+  };
 
   const handleGptSearchClick = async () => {
-    const query = searchText.current.value;
+    const movies = await gemini();
+    console.log(movies);
+    const data = movies.map(movie => searchMovieTMDB(movie));
+    const tmdbMovies = await Promise.all(data);
+    console.log(tmdbMovies);
 
-    // Check if input is empty
-    if (!query) {
-      alert("Please enter a movie description.");
-      return;
-    }
-
-    const gptQuery = `Act as a Movie Recommendation System and suggest me a movie based on the following description: ${query}. Give me movie names separated by commas like Results: Movie Name, Movie Name, Movie Name.`;
-
-    try {
-      // Call the generateContentWithGemini function with the prompt
-      const gptResults = await generateContentWithGemini(gptQuery);
-
-      // Log the results and show them to the user (you can customize how this is displayed)
-      console.log("Recommended Movies:", gptResults);
-      alert(`Recommended Movies: ${gptResults}`); // Display the results
-    } catch (error) {
-      console.error("Error generating content with Gemini:", error);
-      alert("Error: Unable to generate recommendations at the moment.");
-    }
+    dispatch(addGptMovieResult({moviesNames: movies, movieResults: tmdbMovies}));
   };
 
   return (
@@ -42,7 +51,7 @@ const GptSearchBar = () => {
           className="p-4 m-4 col-span-9 rounded-lg border border-gray-300"
         />
         <button
-          type="button" // Ensure button type is "button" to avoid submitting the form
+          type="button"
           className="col-span-3 bg-blue-500 text-white m-4 py-2 px-4 rounded-lg ml-2"
           onClick={handleGptSearchClick}
         >
