@@ -4,9 +4,9 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
-import { LOGO, SUPPORTED_LANGUAGES } from '../utils/constant';
 import { toggleGptSearchView } from '../utils/gptSlice';
 import { changeLanguage } from '../utils/configSlice';
+import { SUPPORTED_LANGUAGES } from '../utils/constant';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -71,12 +71,12 @@ const Header = () => {
 
   return (
     <div className="relative w-full px-4 py-2 bg-gradient-to-b from-black text-white z-10 flex items-center justify-between">
-      <img
-        className="w-20 md:w-24 lg:w-28 cursor-pointer"
-        src={LOGO}
-        alt="Logo"
+      <div
+        className="w-20 md:w-24 lg:w-28 cursor-pointer text-red-600 font-bold text-xl md:text-2xl lg:text-3xl"
         onClick={() => navigate('/')}
-      />
+      >
+        GeminiFlix
+      </div>
       {user && (
         <div className="relative flex items-center space-x-2 md:space-x-4">
           {showGptSearch && (
