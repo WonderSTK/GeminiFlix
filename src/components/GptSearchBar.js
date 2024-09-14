@@ -10,7 +10,7 @@ const GptSearchBar = () => {
   const searchText = useRef(null);
   const dispatch = useDispatch();
 
-  // Search movie in TMDB
+  
   const searchMovieTMDB = async (movie) => {
     const data = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${movie}&=true&language=en-US&page=1`, 
@@ -46,7 +46,7 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="mt-20 pt-20 md:pt-10 flex justify-center w-full"> {/* Added pt-20 for mobile top margin */}
+    <div className="mt-20 pt-20 md:pt-10 flex justify-center w-full"> 
       <form className="w-full max-w-4xl bg-black grid grid-cols-12 gap-2 p-4" onSubmit={(e) => e.preventDefault()}>
         <input
           ref={searchText}

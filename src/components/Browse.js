@@ -8,11 +8,11 @@ import useTopRatedMovies from '../hooks/useTopRatedMovies';
 import useUpComingMovies from '../hooks/useUpComingMovies';
 import GptSearch from './GptSearch';
 import { useSelector } from 'react-redux';
-import MovieInfo from './MovieInfo';  // Import MovieInfo for displaying movie details
+import MovieInfo from './MovieInfo';  
 
 const Browse = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
-  const { page } = useSelector((store) => store.movies?.movieInfo);  // Get movie info state to check if a movie is selected
+  const { page } = useSelector((store) => store.movies?.movieInfo);  
 
   useNowPlayingMovies();
   usePopularMovies();
@@ -31,7 +31,7 @@ const Browse = () => {
         </>
       )}
       
-      {page && (  // Conditionally render MovieInfo if a movie is selected
+      {page && (  
         <div className="fixed top-0 backdrop-blur-sm p-2 w-full h-full flex items-center justify-center z-50">
           <MovieInfo />
         </div>
@@ -42,4 +42,3 @@ const Browse = () => {
 
 export default Browse;
 
-//

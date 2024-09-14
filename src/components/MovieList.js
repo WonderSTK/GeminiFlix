@@ -9,7 +9,7 @@ const MovieList = ({ title, movies }) => {
   const scrollLeft = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
-        left: -500, // Adjust scroll distance
+        left: -500, 
         behavior: 'smooth',
       });
     }
@@ -19,7 +19,7 @@ const MovieList = ({ title, movies }) => {
   const scrollRight = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollBy({
-        left: 500, // Adjust scroll distance
+        left: 500, 
         behavior: 'smooth',
       });
     }

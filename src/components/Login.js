@@ -32,7 +32,7 @@ const Login = () => {
             photoURL: PHOTO_URL,
           })
           .then(() => {
-            // Fetch and dispatch the updated user data
+            
             const { uid, email, displayName, photoURL } = auth.currentUser;
             dispatch(
               addUser({
