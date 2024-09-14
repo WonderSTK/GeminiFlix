@@ -72,6 +72,7 @@ Make sure you have the following installed:
    REACT_APP_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
    REACT_APP_FIREBASE_APP_ID=your_firebase_app_id
+   REACT_APP_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
    REACT_APP_GEMINI_API_KEY=your_gemini_api_key
    ```
 
