@@ -5,7 +5,7 @@ import { BACKGROUND_IMG } from '../utils/constant';
 
 const GptSearch = () => {
   return (
-    <div className="relative flex flex-col items-center justify-start min-h-screen w-full">
+    <div className="relative flex flex-col items-center justify-start min-h-screen w-full opacity-90">
       {/* Background Image */}
       <div className="fixed inset-0 -z-10">
         <img
@@ -21,7 +21,7 @@ const GptSearch = () => {
       </div>
 
       {/* GPT Movie Suggestions */}
-      <div className="w-full md:w-3/4 lg:w-2/3 px-4 mt-6">
+      <div className="w-full md:w-3/4 lg:w-2/3 px-4 flex-grow"> {/* Ensure flex-grow here */}
         <GptMovieSuggestions />
       </div>
     </div>

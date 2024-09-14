@@ -52,7 +52,7 @@ const GptSearchBar = () => {
           ref={searchText}
           type="text"
           placeholder={lang[langKey].gptSearchPlaceholder}
-          className="col-span-9 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500"
+          className="col-span-9 p-3 rounded-lg border text-black border-gray-300 focus:outline-none focus:ring focus:ring-blue-500"
         />
         <button
           type="button"

@@ -23,14 +23,14 @@ const MovieInfo = () => {
     };
 
     return (
-        <div className="relative bg-black mx-auto min-h-[50%] w-[95%] sm:w-[80%] md:w-1/2 rounded-lg aspect-video border border-gray-400 overflow-y-scroll">
+        <div className="relative bg-black mx-auto min-h-[50%] w-[95%] sm:w-[80%] md:w-1/2 lg:w-1/3 rounded-lg aspect-video border border-gray-400 overflow-y-scroll">
             <i onClick={handleMovieInfoPage} className="fixed top-10 right-5 text-3xl cursor-pointer">
                 ✖️
             </i>
             {!movieInfoTrailerPage ? (
                 <div className="p-4">
                     <h1 className="text-2xl font-bold my-2">{info?.title}</h1>
-                    <div className="flex">
+                    <div className="flex flex-col sm:flex-row">
                         <img
                             className="w-36 h-56 rounded-lg"
                             src={IMG_CDN_URL + info?.poster_path}

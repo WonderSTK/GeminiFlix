@@ -29,7 +29,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: PHOTO_URL,  // Fixed this line
+            photoURL: PHOTO_URL,
           })
           .then(() => {
             // Fetch and dispatch the updated user data
@@ -71,55 +71,58 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <div className="absolute">
+    <div className="relative h-screen overflow-hidden">
+      <Header className="fixed top-0 left-0 w-full z-10" />
+      <div className="absolute inset-0">
         <img
-          src= {BACKGROUND_IMG}
+          src={BACKGROUND_IMG}
           alt="background"
+          className="w-full h-full object-cover"
         />
       </div>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white bg-opacity-80"
-      >
-        <h1 className="font-bold text-3xl py-4">
-          {isSignInForm ? 'Sign In' : 'Sign Up'}
-        </h1>
-        {!isSignInForm && (
+      <div className="flex items-center justify-center h-full">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="relative w-full max-w-md p-8 bg-black bg-opacity-80 rounded-lg text-white shadow-lg"
+        >
+          <h1 className="font-bold text-3xl py-4 text-center">
+            {isSignInForm ? 'Sign In' : 'Sign Up'}
+          </h1>
+          {!isSignInForm && (
+            <input
+              ref={name}
+              type="text"
+              placeholder="Username"
+              className="p-4 my-4 w-full bg-gray-700 border border-gray-600 rounded"
+            />
+          )}
           <input
-            ref={name}
+            ref={email}
             type="text"
-            placeholder="Username"
-            className="p-4 my-4 w-full bg-gray-700"
+            placeholder="Email Address"
+            className="p-4 my-4 w-full bg-gray-700 border border-gray-600 rounded"
           />
-        )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email Address"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-4 w-full bg-gray-700"
-        />
-        <p className="py-2 text-red-500">{errorMessage}</p>
-        <button
-          className="p-4 my-4 bg-red-500 w-full rounded-l"
-          onClick={handleButtonClick}
-        >
-          {isSignInForm ? 'Sign In' : 'Sign Up'}
-        </button>
-        <p
-          className="py-4 cursor-pointer"
-          onClick={toggleSignInForm}
-        >
-          {isSignInForm ? 'New to Netflix? Sign Up Now' : 'Already registered? Sign In Now'}
-        </p>
-      </form>
+          <input
+            ref={password}
+            type="password"
+            placeholder="Password"
+            className="p-4 my-4 w-full bg-gray-700 border border-gray-600 rounded"
+          />
+          {errorMessage && <p className="py-2 text-red-500 text-center">{errorMessage}</p>}
+          <button
+            className="p-4 my-4 bg-red-500 w-full rounded-lg text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500"
+            onClick={handleButtonClick}
+          >
+            {isSignInForm ? 'Sign In' : 'Sign Up'}
+          </button>
+          <p
+            className="py-4 text-center cursor-pointer text-blue-400 hover:underline"
+            onClick={toggleSignInForm}
+          >
+            {isSignInForm ? 'New to Netflix? Sign Up Now' : 'Already registered? Sign In Now'}
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
