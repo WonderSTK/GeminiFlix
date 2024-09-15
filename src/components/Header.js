@@ -111,7 +111,7 @@ const Header = () => {
             />
           </div>
           {dropdownOpen && (
-            <div className="absolute right-0 mt-10 py-2 w-24 text-center bg-gray-900 rounded shadow-lg">
+            <div className="absolute right-0 mt-24 py-2 w-24 text-center bg-gray-900 rounded shadow-lg">
               <button
                 className="block text-xs md:text-sm text-white hover:underline w-full"
                 onClick={handleSignOut}

@@ -32,7 +32,6 @@ const Login = () => {
             photoURL: PHOTO_URL,
           })
           .then(() => {
-            
             const { uid, email, displayName, photoURL } = auth.currentUser;
             dispatch(
               addUser({
@@ -57,6 +56,14 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
           const user = userCredential.user;
+          dispatch(
+            addUser({
+              uid: user.uid,
+              email: user.email,
+              displayName: user.displayName || 'Anonymous',
+              photoURL: user.photoURL || PHOTO_URL,
+            })
+          );
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -64,6 +71,28 @@ const Login = () => {
           setErrorMessage(`${errorCode} - ${errorMessage}`);
         });
     }
+  };
+
+  // Handle guest login with predefined credentials
+  const handleGuestLogin = () => {
+    const guestEmail = "guestuser@gmail.com";
+    const guestPassword = "Guest@123user";
+
+    signInWithEmailAndPassword(auth, guestEmail, guestPassword)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(
+          addUser({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName || 'Guest User',
+            photoURL: PHOTO_URL,
+          })
+        );
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   const toggleSignInForm = () => {
@@ -121,6 +150,14 @@ const Login = () => {
           >
             {isSignInForm ? 'New to GeminiFlix? Sign Up Now' : 'Already registered? Sign In Now'}
           </p>
+
+          {/* Guest login button */}
+          <button
+            className="p-4 mt-4 bg-gray-500 w-full rounded-lg text-white hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-500"
+            onClick={handleGuestLogin}
+          >
+            Login as Guest
+          </button>
         </form>
       </div>
     </div>
